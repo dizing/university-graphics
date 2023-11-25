@@ -8,9 +8,9 @@ namespace my_graph_lib {
 using RGBColor = std::tuple<uint8_t, uint8_t, uint8_t>;
 using Position = std::tuple<float, float>;
 
-struct AbstractPointDrawer {
+struct PointDrawer {
   virtual void Draw(Position, RGBColor, float) = 0;
-  virtual ~AbstractPointDrawer() {}
+  virtual ~PointDrawer() {}
 };
 
 class tPoint {
@@ -18,7 +18,7 @@ class tPoint {
   tPoint();
   tPoint(Position position, RGBColor color, float size);
 
-  void Draw(AbstractPointDrawer&);
+  void Draw(PointDrawer&);
 
   void setPosition(Position);
   Position getPosition() const;

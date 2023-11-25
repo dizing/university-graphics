@@ -32,7 +32,7 @@ void tPoint::movePointBy(Position delta) {
   setPosition({x + delta_x, y + delta_y});
 }
 
-void tPoint::Draw(AbstractPointDrawer& drawer) {
+void tPoint::Draw(PointDrawer& drawer) {
   drawer.Draw(position_, color_, size_);
 }
 

@@ -7,7 +7,7 @@
 
 #include "tPoint.h"
 
-class SFMLPointDrawer : public my_graph_lib::AbstractPointDrawer {
+class SFMLPointDrawer : public my_graph_lib::PointDrawer {
  public:
   SFMLPointDrawer(sf::RenderWindow& window) : window_(window) {}
 
