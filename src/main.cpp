@@ -6,21 +6,43 @@
 #include <iostream>
 
 #include "tPoint.h"
+#include "tSegmentFigure.h"
 
-class SFMLPointDrawer : public my_graph_lib::PointDrawer {
+class SFMLPointDrawer : public my_graph_lib::Drawer {
  public:
   SFMLPointDrawer(sf::RenderWindow& window) : window_(window) {}
 
-  void Draw(my_graph_lib::Position pos, my_graph_lib::RGBColor color,
-            float radius) override {
+  void Draw(const my_graph_lib::tPoint& point) override {
     sf::CircleShape shape;
     shape.setPosition(1, 2);
-    auto [x, y] = pos;
-    auto [r, g, b] = color;
+    auto [x, y] = point.getPosition();
+    auto [r, g, b] = point.getRGBColor();
     shape.setPosition(x, y);
     shape.setFillColor({r, g, b});
-    shape.setRadius(radius);
+    shape.setRadius(point.getSize());
     window_.draw(shape);
+  }
+
+  void Draw(const my_graph_lib::tSegmentFigure& figure) override {
+    auto& points = figure.getPoints();
+    auto [r, g, b] = figure.getRGBColor();
+    if (points.size() > 2) {
+      sf::ConvexShape convex;
+    convex.setPointCount(points.size());
+    for (auto i = 0; i < points.size(); ++i) {
+      auto& [x, y] = points[i];
+      convex.setPoint(i, sf::Vector2f(x, y));
+    }
+    convex.setFillColor({r, g, b});
+    window_.draw(convex);
+    } else {
+      auto& [x0, y0] = points[0];
+      auto& [x1, y1] = points[1];
+      sf::VertexArray line(sf::LineStrip, 2);
+      line[0] = sf::Vertex(sf::Vector2f(x0, y0), {r, g, b});
+      line[1] = sf::Vertex(sf::Vector2f(x1, y1), {r, g, b});
+      window_.draw(line);
+    }
   }
 
  private:
@@ -88,14 +110,27 @@ int main() {
   auto window = sf::RenderWindow{{1920u, 1080u}, "CMake SFML Project"};
   window.setFramerateLimit(144);
 
-  std::vector<my_graph_lib::tPoint> points;
+  std::vector<std::unique_ptr<my_graph_lib::Drawable>> drawables;
+  // СОЗДАТЬ 100 СЛУЧАЙНЫХ ТОЧЕК
   for (int i = 0; i < 100; ++i) {
     my_graph_lib::Position pos = {fmodf(rand(), window.getSize().x),
                                   fmodf(rand(), window.getSize().y)};
     my_graph_lib::RGBColor color = {rand() % 255, rand() % 255, rand() % 255};
     float size = (rand() % 100) / 50.0f;
-    my_graph_lib::tPoint point(pos, color, size);
-    points.push_back(std::move(point));
+    drawables.push_back(
+        std::make_unique<my_graph_lib::tPoint>(pos, color, size));
+  }
+  // СОЗДАТЬ 2 СЛУЧАЙНЫХ ФИГУР
+  for (int i = 0; i < 2; ++i) {
+    std::vector<my_graph_lib::Position> points(1 + (rand() % 4));
+    for (int j = 0; j < points.size(); ++j) {
+      points[j] = {fmodf(rand(), window.getSize().x),
+                   fmodf(rand(), window.getSize().y)};
+    }
+    my_graph_lib::RGBColor color = {rand() % 255, rand() % 255, rand() % 255};
+    float size = (rand() % 100) / 50.0f;
+    drawables.push_back(std::make_unique<my_graph_lib::tSegmentFigure>(
+        std::move(points), color, size));
   }
   my_graph_lib::tPoint main_point;
   main_point.setPosition({500, 500});
@@ -114,8 +149,8 @@ int main() {
       }
     }
     window.clear();
-    for (auto& point : points) {
-      point.Draw(drawer);
+    for (auto& drawable_figure : drawables) {
+      drawable_figure->Draw(drawer);
     }
     state.moveAccordingly(main_point);
     main_point.Draw(drawer);

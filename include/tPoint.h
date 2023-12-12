@@ -1,24 +1,17 @@
 #pragma once
-#include <tuple>
 #include <vector>
 #include <cstdint>
 
+#include "DrawInterfaces.h"
+
 namespace my_graph_lib {
 
-using RGBColor = std::tuple<uint8_t, uint8_t, uint8_t>;
-using Position = std::tuple<float, float>;
-
-struct PointDrawer {
-  virtual void Draw(Position, RGBColor, float) = 0;
-  virtual ~PointDrawer() {}
-};
-
-class tPoint {
+class tPoint : public Drawable {
  public:
   tPoint();
   tPoint(Position position, RGBColor color, float size);
 
-  void Draw(PointDrawer&);
+  void Draw(Drawer&) override;
 
   void setPosition(Position);
   Position getPosition() const;

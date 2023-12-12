@@ -32,8 +32,6 @@ void tPoint::movePointBy(Position delta) {
   setPosition({x + delta_x, y + delta_y});
 }
 
-void tPoint::Draw(PointDrawer& drawer) {
-  drawer.Draw(position_, color_, size_);
-}
+void tPoint::Draw(Drawer& drawer) { drawer.Draw(*this); }
 
 }  // namespace my_graph_lib
