@@ -4,6 +4,7 @@
 #include <cmath>
 #include <functional>
 #include <iostream>
+#include <memory>
 
 #include "tPoint.h"
 #include "tSegmentFigure.h"
