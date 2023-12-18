@@ -11,7 +11,10 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(${PROJECT_NAME} src/main.cpp src/tPoint.cpp src/tSegmentFigure.cpp)
+file(GLOB_RECURSE sources ${PROJECT_SOURCE_DIR}/src/*.cpp)
+file(GLOB_RECURSE headers ${PROJECT_SOURCE_DIR}/include/*.h)
+
+add_executable(${PROJECT_NAME} ${sources} ${headers})
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics)

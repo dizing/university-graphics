@@ -9,6 +9,8 @@
 #include "tPoint.h"
 #include "tSegmentFigure.h"
 
+#include "tTriangle.h"
+
 class SFMLPointDrawer : public my_graph_lib::Drawer {
  public:
   SFMLPointDrawer(sf::RenderWindow& window) : window_(window) {}
@@ -121,18 +123,16 @@ int main() {
     drawables.push_back(
         std::make_unique<my_graph_lib::tPoint>(pos, color, size));
   }
-  // СОЗДАТЬ 2 СЛУЧАЙНЫХ ФИГУР
-  for (int i = 0; i < 2; ++i) {
-    std::vector<my_graph_lib::Position> points(1 + (rand() % 4));
-    for (int j = 0; j < points.size(); ++j) {
+  // СОЗДАТЬ СЛУЧАЙНЫй Треугольник
+    std::array<my_graph_lib::Position, 3> points;
+    for (int j = 0; j < 3; ++j) {
       points[j] = {fmodf(rand(), window.getSize().x),
                    fmodf(rand(), window.getSize().y)};
     }
     my_graph_lib::RGBColor color = {rand() % 255, rand() % 255, rand() % 255};
     float size = (rand() % 100) / 50.0f;
-    drawables.push_back(std::make_unique<my_graph_lib::tSegmentFigure>(
-        std::move(points), color, size));
-  }
+    drawables.push_back(std::make_unique<my_graph_lib::tTriangle>(
+        points, color, size));
   my_graph_lib::tPoint main_point;
   main_point.setPosition({500, 500});
   main_point.setRGBColor({100, 100, 100});

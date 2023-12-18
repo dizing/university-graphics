@@ -7,14 +7,15 @@ namespace my_graph_lib {
 
 class tSegmentFigure : public Drawable {
  public:
-  tSegmentFigure(std::vector<Position> points, RGBColor color,
-                 float line_thickness);
-  const std::vector<Position>& getPoints() const;
   void Draw(Drawer&) override;
 
   void setRGBColor(RGBColor);
   RGBColor getRGBColor() const;
+  const std::vector<Position>& getPoints() const;
 
+  protected: 
+  tSegmentFigure(std::vector<Position> points, RGBColor color,
+                 float line_thickness);
  private:
   std::vector<Position> points_;
   RGBColor color_;
