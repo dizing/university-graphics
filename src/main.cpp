@@ -11,6 +11,8 @@
 
 #include "tTriangle.h"
 
+#include "FigureDrawingStates.h"
+
 class SFMLPointDrawer : public my_graph_lib::Drawer {
  public:
   SFMLPointDrawer(sf::RenderWindow& window) : window_(window) {}
@@ -113,32 +115,35 @@ int main() {
   auto window = sf::RenderWindow{{1920u, 1080u}, "CMake SFML Project"};
   window.setFramerateLimit(144);
 
-  std::vector<std::unique_ptr<my_graph_lib::Drawable>> drawables;
-  // СОЗДАТЬ 100 СЛУЧАЙНЫХ ТОЧЕК
-  for (int i = 0; i < 100; ++i) {
-    my_graph_lib::Position pos = {fmodf(rand(), window.getSize().x),
-                                  fmodf(rand(), window.getSize().y)};
-    my_graph_lib::RGBColor color = {rand() % 255, rand() % 255, rand() % 255};
-    float size = (rand() % 100) / 50.0f;
-    drawables.push_back(
-        std::make_unique<my_graph_lib::tPoint>(pos, color, size));
-  }
-  // СОЗДАТЬ СЛУЧАЙНЫй Треугольник
-    std::array<my_graph_lib::Position, 3> points;
-    for (int j = 0; j < 3; ++j) {
-      points[j] = {fmodf(rand(), window.getSize().x),
-                   fmodf(rand(), window.getSize().y)};
-    }
-    my_graph_lib::RGBColor color = {rand() % 255, rand() % 255, rand() % 255};
-    float size = (rand() % 100) / 50.0f;
-    drawables.push_back(std::make_unique<my_graph_lib::tTriangle>(
-        points, color, size));
-  my_graph_lib::tPoint main_point;
-  main_point.setPosition({500, 500});
-  main_point.setRGBColor({100, 100, 100});
-  main_point.setSize(50);
-  SFMLPointDrawer drawer(window);
-  MovablePointState state;
+  // std::vector<std::unique_ptr<my_graph_lib::Drawable>> drawables;
+  // // СОЗДАТЬ 100 СЛУЧАЙНЫХ ТОЧЕК
+  // for (int i = 0; i < 100; ++i) {
+  //   my_graph_lib::Position pos = {fmodf(rand(), window.getSize().x),
+  //                                 fmodf(rand(), window.getSize().y)};
+  //   my_graph_lib::RGBColor color = {rand() % 255, rand() % 255, rand() % 255};
+  //   float size = (rand() % 100) / 50.0f;
+  //   drawables.push_back(
+  //       std::make_unique<my_graph_lib::tPoint>(pos, color, size));
+  // }
+  // // СОЗДАТЬ СЛУЧАЙНЫЙ Треугольник
+  //   std::array<my_graph_lib::Position, 3> points;
+  //   for (int j = 0; j < 3; ++j) {
+  //     points[j] = {fmodf(rand(), window.getSize().x),
+  //                  fmodf(rand(), window.getSize().y)};
+  //   }
+  //   my_graph_lib::RGBColor color = {rand() % 255, rand() % 255, rand() % 255};
+  //   float size = (rand() % 100) / 50.0f;
+  //   drawables.push_back(std::make_unique<my_graph_lib::tTriangle>(
+  //       points, color, size));
+  // my_graph_lib::tPoint main_point;
+  // main_point.setPosition({500, 500});
+  // main_point.setRGBColor({100, 100, 100});
+  // main_point.setSize(50);
+  // SFMLPointDrawer drawer(window);
+  // MovablePointState state;
+
+  FigureDrawingMenu menu(window.getSize().x, window.getSize().y);
+
   while (window.isOpen()) {
     for (auto event = sf::Event{}; window.pollEvent(event);) {
       if (event.type == sf::Event::Closed) {
@@ -146,15 +151,24 @@ int main() {
       }
       if (event.type == sf::Event::KeyPressed ||
           event.type == sf::Event::KeyReleased) {
-        state.handleEvents(event);
+        // state.handleEvents(event);
+        menu.OnEvent(event);
       }
+      if(event.type == sf::Event::Resized) {
+        window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
+        menu.Resize(window.getSize().x, window.getSize().y);
+      }
+        
     }
     window.clear();
-    for (auto& drawable_figure : drawables) {
-      drawable_figure->Draw(drawer);
-    }
-    state.moveAccordingly(main_point);
-    main_point.Draw(drawer);
+    // for (auto& drawable_figure : drawables) {
+    //   drawable_figure->Draw(drawer);
+    // }
+    // state.moveAccordingly(main_point);
+    // main_point.Draw(drawer);
+
+    menu.Draw(window);
+
     window.display();
   }
 }
