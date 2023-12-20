@@ -141,7 +141,6 @@ int main() {
   // main_point.setSize(50);
   // SFMLPointDrawer drawer(window);
   // MovablePointState state;
-  
   sf::Font font{};
   font.loadFromFile("/Users/julietah/Documents/SIBSUTIS/ООП/university_graphics/src/ethn.otf");
   FigureDrawingMenu menu(window.getSize().x, window.getSize().y, font, {"Point", "Line", "Segment", "Rectangle", "Triangle"});
