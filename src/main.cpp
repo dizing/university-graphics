@@ -141,9 +141,10 @@ int main() {
   // main_point.setSize(50);
   // SFMLPointDrawer drawer(window);
   // MovablePointState state;
-
-  FigureDrawingMenu menu(window.getSize().x, window.getSize().y);
-
+  sf::Font font{};
+  font.loadFromFile("/Users/julietah/Documents/SIBSUTIS/ООП/university_graphics/src/ethn.otf");
+  FigureDrawingMenu menu(window.getSize().x, window.getSize().y, font, {"Point", "Line", "Segment", "Rectangle", "Triangle"});
+  
   while (window.isOpen()) {
     for (auto event = sf::Event{}; window.pollEvent(event);) {
       if (event.type == sf::Event::Closed) {
