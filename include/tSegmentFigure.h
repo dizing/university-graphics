@@ -13,13 +13,14 @@ class tSegmentFigure : public Drawable {
   RGBColor getRGBColor() const;
   const std::vector<Position>& getPoints() const;
 
-  protected: 
-  tSegmentFigure(std::vector<Position> points, RGBColor color,
-                 float line_thickness);
+  static void movePointBy(tSegmentFigure& figure, Position delta);
+
+ protected:
+  tSegmentFigure(std::vector<Position> points, RGBColor color);
+
  private:
   std::vector<Position> points_;
   RGBColor color_;
-  float line_thickness_;
 };
 
 }  // namespace my_graph_lib

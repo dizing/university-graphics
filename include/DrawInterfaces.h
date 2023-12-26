@@ -1,6 +1,6 @@
 #pragma once
-#include <tuple>
 #include <cstdint>
+#include <tuple>
 
 namespace my_graph_lib {
 

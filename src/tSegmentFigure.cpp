@@ -12,11 +12,9 @@ int orientation(Position p, Position q, Position r) {
   return (val > 0) ? 1 : 2;
 }
 
-tSegmentFigure::tSegmentFigure(std::vector<Position> points, RGBColor color,
-                               float line_thickness)
+tSegmentFigure::tSegmentFigure(std::vector<Position> points, RGBColor color)
     : points_(),
-      color_(std::move(color)),
-      line_thickness_(line_thickness)
+      color_(std::move(color))
 
 {
   int l = 0;
@@ -43,5 +41,11 @@ void tSegmentFigure::setRGBColor(RGBColor new_color) { color_ = new_color; }
 
 RGBColor tSegmentFigure::getRGBColor() const { return color_; }
 
+void tSegmentFigure::movePointBy(tSegmentFigure &figure, Position delta) {
+  auto [delta_x, delta_y] = delta;
+  for (auto &pos : figure.points_) {
+    pos = {std::get<0>(pos) + delta_x, std::get<1>(pos) + delta_y};
+  }
+}
 
 }  // namespace my_graph_lib
