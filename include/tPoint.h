@@ -21,7 +21,7 @@ class tPoint : public Drawable {
   void setSize(float radius);
   float getSize() const;
 
-  void movePointBy(Position delta);
+  static void movePointBy(tPoint& point, Position delta);
 
  private:
   Position position_;

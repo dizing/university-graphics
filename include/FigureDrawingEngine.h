@@ -3,79 +3,77 @@
 #include "tPoint.h"
 #include "tRectangle.h"
 #include "tTriangle.h"
+#include <functional>
 
 class MovablePointState {
- public:
-  MovablePointState() {}
+public:
+    MovablePointState() {}
 
-  void moveAccordingly(my_graph_lib::tPoint& point) {
-    if (is_moving_left) {
-      point.movePointBy({-10, 0});
+    void handleEvents(sf::Event event) {
+        static const std::map <sf::Keyboard::Key, std::function<int(int)>> press_handlers {
+            {sf::Keyboard::Left, [](int flags) {return flags | kLeft; }},
+            {sf::Keyboard::Right, [](int flags) {return flags | kRight; }},
+            {sf::Keyboard::Up, [](int flags) {return flags | kUp; }},
+            {sf::Keyboard::Down, [](int flags) {return flags | kDown; }},
+            {sf::Keyboard::R, [](int flags) {return flags | kRandom; }}
+        };
+        static const std::map <sf::Keyboard::Key, std::function<int(int)>> release_handlers{
+            {sf::Keyboard::Left, [](int flags) {return flags & ~kLeft; }},
+            {sf::Keyboard::Right, [](int flags) {return flags & ~kRight; }},
+            {sf::Keyboard::Up, [](int flags) {return flags & ~kUp; }},
+            {sf::Keyboard::Down, [](int flags) {return flags & ~kDown; }},
+            {sf::Keyboard::R, [](int flags) {return flags & ~kRandom; }}
+        };
+        
+        if (event.type == sf::Event::KeyPressed) {
+            direction_flags_ = press_handlers.at(event.key.code)(direction_flags_);
+        }
+        if (event.type == sf::Event::KeyReleased) {
+            direction_flags_ = release_handlers.at(event.key.code)(direction_flags_);
+        }
     }
-    if (is_moving_right) {
-      point.movePointBy({10, 0});
-    }
-    if (is_moving_up) {
-      point.movePointBy({0, -10});
-    }
-    if (is_moving_down) {
-      point.movePointBy({0, +10});
-    }
-    if (is_moving_random) {
-      point.movePointBy({(rand() % 6) - 2.5, (rand() % 6) - 2.5});
-    }
-  }
-  void handleEvents(sf::Event event) {
-    if (event.type == sf::Event::KeyPressed) {
-      if (event.key.code == sf::Keyboard::Left) {
-        is_moving_left = true;
-      } else if (event.key.code == sf::Keyboard::Right) {
-        is_moving_right = true;
-      } else if (event.key.code == sf::Keyboard::Up) {
-        is_moving_up = true;
-      } else if (event.key.code == sf::Keyboard::Down) {
-        is_moving_down = true;
-      } else if (event.key.code == sf::Keyboard::R) {
-        is_moving_random = !is_moving_random;
-      }
-    }
-    if (event.type == sf::Event::KeyReleased) {
-      if (event.key.code == sf::Keyboard::Left) {
-        is_moving_left = false;
-      } else if (event.key.code == sf::Keyboard::Right) {
-        is_moving_right = false;
-      } else if (event.key.code == sf::Keyboard::Up) {
-        is_moving_up = false;
-      } else if (event.key.code == sf::Keyboard::Down) {
-        is_moving_down = false;
-      }
-    }
-  }
+    
+    struct inside_pos {
+        float x;
+        float y;
 
-  my_graph_lib::Position GetUpdateDelta() {
-    if (is_moving_left) {
-      return {-10, 0};
-    }
-    if (is_moving_right) {
-      return {10, 0};
-    }
-    if (is_moving_up) {
-      return {0, -10};
-    }
-    if (is_moving_down) {
-      return {0, +10};
-    }
-    if (is_moving_random) {
-      return {(rand() % 6) - 2.5, (rand() % 6) - 2.5};
-    }
-  }
+        inside_pos& operator+=(const inside_pos& other) {
+            x += other.x;
+            y += other.y;
+            return *this;
+        }
+        inside_pos operator+(const inside_pos& other) {
+            inside_pos tmp = *this;
+            tmp += other;
+            return tmp;
+        }
+    };
 
- private:
-  bool is_moving_right = false;
-  bool is_moving_left = false;
-  bool is_moving_up = false;
-  bool is_moving_down = false;
-  bool is_moving_random = false;
+    my_graph_lib::Position GetUpdateDelta() {
+        inside_pos delta = { 0, 0 };
+        static const std::vector<std::function<void(int, inside_pos&)>> updaters{
+            [](int flags, inside_pos& delta) {if (flags & kLeft) delta.x -= 10.f; },
+            [](int flags, inside_pos& delta) {if (flags & kRight) delta.x += 10.f; },
+            [](int flags, inside_pos& delta) {if (flags & kUp) delta.y -= 10.f; },
+            [](int flags, inside_pos& delta) {if (flags & kDown) delta.y += 10.f; },
+            [](int flags, inside_pos& delta) {if (flags & kRandom) delta += { (rand() % 6) - 2.5f, (rand() % 6) - 2.5f }; },
+        };
+        for (auto& updater : updaters) {
+            updater(direction_flags_, delta);
+        }
+        return { delta.x, delta.y };
+    }
+
+private: 
+    enum MovingDirections
+    {
+        kLeft = 1 << 0, // binary 00001
+        kRight = 1 << 1, // binary 00010
+        kUp = 1 << 2, // binary 00100
+        kDown = 1 << 3,  // binary 01000
+        kRandom = 1 << 4  // binary 10000
+    };
+    int direction_flags_ = 0;
 };
 
 using Drawables =
@@ -84,7 +82,7 @@ Drawables InitializeDrawables() {
   Drawables drawables;
   my_graph_lib::RGBColor color = {rand() % 255, rand() % 255, rand() % 255};
   std::array<my_graph_lib::Position, 4> points = {
-      {{300, 300}, {500, 500}, {300, 500}, {500, 300}}};
+      {{300.f, 300.f}, {500.f, 500.f}, {300.f, 500.f}, {500.f, 300.f}}};
   my_graph_lib::tPoint point;
   point.setPosition(points[0]);
   point.setRGBColor(color);
@@ -138,8 +136,10 @@ class FigureDrawingEngine : public MenuOwner {
   void Update() {
     if (current_state_ == EngineState::kDrawingObject) {
       if (current_drawable_object_name_ == "Point") {
-        movable_state_.moveAccordingly(dynamic_cast<my_graph_lib::tPoint&>(
-            *drawables_[current_drawable_object_name_]));
+          my_graph_lib::tPoint::movePointBy(
+              dynamic_cast<my_graph_lib::tPoint&>(
+                  *drawables_[current_drawable_object_name_]),
+              movable_state_.GetUpdateDelta());
       }
       if (current_drawable_object_name_ == "Rectangle") {
         my_graph_lib::tRectangle::movePointBy(

@@ -35,7 +35,7 @@ class FigureDrawingMenu {
     }
     void setSize(const sf::Vector2f& size) {
       sf::RectangleShape::setSize(size);
-      text_.setCharacterSize((size.y > 15) ? size.y - 15 : 1);
+      text_.setCharacterSize((size.y > 20) ? size.y - 20 : 1);
     }
     std::string GetName() { return text_.getString(); }
 

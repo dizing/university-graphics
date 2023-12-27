@@ -3,7 +3,7 @@
 namespace my_graph_lib {
 
 tPoint::tPoint() {
-  setPosition({0, 0});
+  setPosition({0.f, 0.f});
   setRGBColor({0, 0, 0});
   setSize(1);
 }
@@ -26,10 +26,10 @@ void tPoint::setSize(float radius) { size_ = radius; }
 
 float tPoint::getSize() const { return size_; }
 
-void tPoint::movePointBy(Position delta) {
-  auto [x, y] = getPosition();
+void tPoint::movePointBy(tPoint& point, Position delta){
+  auto [x, y] = point.getPosition();
   auto [delta_x, delta_y] = delta;
-  setPosition({x + delta_x, y + delta_y});
+  point.setPosition({x + delta_x, y + delta_y});
 }
 
 void tPoint::Draw(Drawer& drawer) { drawer.Draw(*this); }

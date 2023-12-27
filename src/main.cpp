@@ -55,7 +55,7 @@ class SFMLPointDrawer : public my_graph_lib::Drawer {
 
 int main() {
   srand(time(NULL));
-  auto window = sf::RenderWindow{{1920u, 1080u}, "CMake SFML Project"};
+  auto window = sf::RenderWindow{{1500u, 700u}, "CMake SFML Project"};
   window.setFramerateLimit(144);
 
   // std::vector<std::unique_ptr<my_graph_lib::Drawable>> drawables;
@@ -82,8 +82,7 @@ int main() {
   sf::Font font{};
 
   font.loadFromFile(
-      "/Users/julietah/Documents/SIBSUTIS/ООП/university_graphics/src/"
-      "ethn.otf");
+      "C:/Documets/src/ethn.otf");
   FigureDrawingEngine owner(window, font);
   // FigureDrawingMenu menu(owner, font,
   //                        {"Point", "Line", "Segment", "Rectangle",
