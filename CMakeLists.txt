@@ -2,15 +2,19 @@ cmake_minimum_required(VERSION 3.16)
 project(oop_sibsutis LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED)
+
+#DEPENDENCIES
 include(FetchContent)
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
+#SOURCE FILES
 file(GLOB_RECURSE sources ${PROJECT_SOURCE_DIR}/src/*.cpp)
 file(GLOB_RECURSE headers ${PROJECT_SOURCE_DIR}/include/*.h)
 
@@ -18,6 +22,17 @@ add_executable(${PROJECT_NAME} ${sources} ${headers})
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics)
+
+#RESOURCES
+set (${PROJECT_NAME}_RESOURCE_DIRECTORY ${CMAKE_BINARY_DIR}/resources)
+target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_RESOURCE_DIRECTORY="${${PROJECT_NAME}_RESOURCE_DIRECTORY}")
+
+add_custom_command(TARGET ${PROJECT_NAME}
+    PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/font.otf                   
+        ${PROJECT_NAME}_RESOURCE_DIRECTORY/font.otf
+)
 
 if(WIN32)
     add_custom_command(

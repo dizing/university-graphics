@@ -80,13 +80,15 @@ int main() {
   SFMLPointDrawer drawer(window);
   // MovablePointState state;
   sf::Font font{};
-
-  font.loadFromFile(
-      "C:/Documets/src/ethn.otf");
+  #ifdef oop_sibsutis_RESOURCE_DIRECTORY
+  font.loadFromFile(std::string(oop_sibsutis_RESOURCE_DIRECTORY) + "/font.otf");
+  #else
+    static_assert(false, "Error in build system. Missing resource directory");
+  #endif
   FigureDrawingEngine owner(window, font);
   // FigureDrawingMenu menu(owner, font,
   //                        {"Point", "Line", "Segment", "Rectangle",
-  //                        "Triangle"});
+  //                        "Triangle"});;
   // menu.SetSize(window.getSize().x, window.getSize().y);
 
   while (window.isOpen()) {
