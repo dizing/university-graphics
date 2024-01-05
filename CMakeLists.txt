@@ -15,13 +15,14 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 #SOURCE FILES
-file(GLOB_RECURSE sources ${PROJECT_SOURCE_DIR}/src/*.cpp)
-file(GLOB_RECURSE headers ${PROJECT_SOURCE_DIR}/include/*.h)
+add_subdirectory(my_graph_lib)
+add_subdirectory(drawing_figures)
 
-add_executable(${PROJECT_NAME} ${sources} ${headers})
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
+add_executable(${PROJECT_NAME} main.cc)
+target_link_libraries(${PROJECT_NAME} PRIVATE drawing_figures)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics)
+target_compile_options(${PROJECT_NAME} PRIVATE -fsanitize=address)
+target_link_options(${PROJECT_NAME} PRIVATE -fsanitize=address)
 
 #RESOURCES
 set (${PROJECT_NAME}_RESOURCE_DIRECTORY ${CMAKE_BINARY_DIR}/resources)
@@ -31,7 +32,7 @@ add_custom_command(TARGET ${PROJECT_NAME}
     PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_CURRENT_SOURCE_DIR}/resources/font.otf                   
-        ${PROJECT_NAME}_RESOURCE_DIRECTORY/font.otf
+        ${${PROJECT_NAME}_RESOURCE_DIRECTORY}/font.otf
 )
 
 if(WIN32)

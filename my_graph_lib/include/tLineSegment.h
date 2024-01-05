@@ -6,4 +6,4 @@
 namespace my_graph_lib {
 class tLineSegment {};
 
-}  // namespace my_graph_lib
+} // namespace my_graph_lib

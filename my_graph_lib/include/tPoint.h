@@ -6,11 +6,11 @@
 namespace my_graph_lib {
 
 class tPoint : public Drawable {
- public:
+public:
   tPoint();
   tPoint(Position position, RGBColor color, float size);
 
-  void Draw(Drawer&) override;
+  void Draw(Drawer &) override;
 
   void setPosition(Position);
   Position getPosition() const;
@@ -21,12 +21,12 @@ class tPoint : public Drawable {
   void setSize(float radius);
   float getSize() const;
 
-  static void movePointBy(tPoint& point, Position delta);
+  static void movePointBy(tPoint &point, Position delta);
 
- private:
+private:
   Position position_;
   float size_;
   RGBColor color_;
 };
 
-}  // namespace my_graph_lib
+} // namespace my_graph_lib

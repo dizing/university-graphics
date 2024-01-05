@@ -1,9 +1,9 @@
 #include "FigureDrawingMenu.h"
 
-FigureDrawingMenu::FigureDrawingMenu(MenuOwner& owner, sf::Font font,
+FigureDrawingMenu::FigureDrawingMenu(MenuOwner &owner, sf::Font font,
                                      std::vector<std::string> menu_content)
     : owner_(owner), current_item_(0), font_(std::move(font)) {
-  for (auto& str : menu_content) {
+  for (auto &str : menu_content) {
     sf::Text text(str, font_);
     text.setFillColor({0, 0, 0});
     MenuElement item(std::move(text));
@@ -15,8 +15,8 @@ FigureDrawingMenu::FigureDrawingMenu(MenuOwner& owner, sf::Font font,
   ColorizeSelected(current_item_);
 }
 
-void FigureDrawingMenu::Draw(sf::RenderWindow& window) {
-  for (auto& item : menu_items_) {
+void FigureDrawingMenu::Draw(sf::RenderWindow &window) {
+  for (auto &item : menu_items_) {
     item.Draw(window);
   }
 }
@@ -24,9 +24,9 @@ void FigureDrawingMenu::Draw(sf::RenderWindow& window) {
 void FigureDrawingMenu::SetSize(float x, float y) {
   for (int i = 0; i < menu_items_.size(); ++i) {
     menu_items_[i].setSize({x / 2.f, y / (menu_items_.size() * 2 + 1.f)});
-    menu_items_[i].setPosition(
-        x / 2. - menu_items_[i].getSize().x / 2.,
-        (1. + 2. * i) * y / (menu_items_.size() * 2. + 1.f));
+    menu_items_[i].setPosition(x / 2. - menu_items_[i].getSize().x / 2.,
+                               (1. + 2. * i) * y /
+                                   (menu_items_.size() * 2. + 1.f));
   }
 }
 
@@ -52,8 +52,27 @@ void FigureDrawingMenu::OnEvent(sf::Event event) {
 }
 
 void FigureDrawingMenu::ColorizeSelected(std::size_t new_selected) {
-  for (auto& item : menu_items_) {
+  for (auto &item : menu_items_) {
     item.setOutlineThickness(0);
   }
   menu_items_[new_selected].setOutlineThickness(10);
+}
+
+FigureDrawingMenu::MenuElement::MenuElement(sf::Text text)
+    : sf::RectangleShape(), text_(std::move(text)) {}
+
+void FigureDrawingMenu::MenuElement::Draw(sf::RenderWindow &window) {
+  window.draw(static_cast<sf::RectangleShape>(*this));
+  window.draw(text_);
+}
+void FigureDrawingMenu::MenuElement::setPosition(float x, float y) {
+  sf::RectangleShape::setPosition(x, y);
+  text_.setPosition(x, y);
+}
+void FigureDrawingMenu::MenuElement::setSize(const sf::Vector2f &size) {
+  sf::RectangleShape::setSize(size);
+  text_.setCharacterSize((size.y > 20) ? size.y - 20 : 1);
+}
+std::string FigureDrawingMenu::MenuElement::GetName() {
+  return text_.getString();
 }
