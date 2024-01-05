@@ -2,7 +2,7 @@
 
 FigureDrawingMenu::FigureDrawingMenu(MenuOwner &owner, sf::Font font,
                                      std::vector<std::string> menu_content)
-    : owner_(owner), current_item_(0), font_(std::move(font)) {
+    : owner_(owner), menu_items_(), current_item_(0), font_(std::move(font)) {
   for (auto &str : menu_content) {
     sf::Text text(str, font_);
     text.setFillColor({0, 0, 0});

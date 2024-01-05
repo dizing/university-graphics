@@ -24,7 +24,7 @@ private:
   class MenuElement;
 
   MenuOwner &owner_;
-  std::vector<MenuElement> menu_items_{};
+  std::vector<MenuElement> menu_items_;
   std::size_t current_item_;
   sf::Font font_;
 

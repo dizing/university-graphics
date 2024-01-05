@@ -21,9 +21,6 @@ add_subdirectory(drawing_figures)
 add_executable(${PROJECT_NAME} main.cc)
 target_link_libraries(${PROJECT_NAME} PRIVATE drawing_figures)
 
-target_compile_options(${PROJECT_NAME} PRIVATE -fsanitize=address)
-target_link_options(${PROJECT_NAME} PRIVATE -fsanitize=address)
-
 #RESOURCES
 set (${PROJECT_NAME}_RESOURCE_DIRECTORY ${CMAKE_BINARY_DIR}/resources)
 target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_RESOURCE_DIRECTORY="${${PROJECT_NAME}_RESOURCE_DIRECTORY}")
