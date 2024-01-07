@@ -99,6 +99,12 @@ void FigureDrawingEngine::Update() {
               *drawables_[current_drawable_object_name_]),
           movable_state_.GetUpdateDelta());
     }
+    if (current_drawable_object_name_ == "Line Segment") {
+      my_graph_lib::tLineSegment::movePointBy(
+          dynamic_cast<my_graph_lib::tLineSegment &>(
+              *drawables_[current_drawable_object_name_]),
+          movable_state_.GetUpdateDelta());
+    }
   }
 }
 
@@ -128,6 +134,9 @@ FigureDrawingEngine::Drawables FigureDrawingEngine::InitializeDrawables() {
       points[0], points[1], points[2], color));
   drawables["Rectangle"] = std::move(std::make_unique<my_graph_lib::tRectangle>(
       points[0], points[1], points[2], points[3], color));
+  drawables["Line Segment"] =
+      std::move(std::make_unique<my_graph_lib::tLineSegment>(points[0],
+                                                             points[1], color));
   return drawables;
 }
 

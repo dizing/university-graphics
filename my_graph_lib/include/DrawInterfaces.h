@@ -6,6 +6,7 @@ namespace my_graph_lib {
 
 class tPoint;
 class tSegmentFigure;
+class tLineSegment;
 
 using RGBColor = std::tuple<uint8_t, uint8_t, uint8_t>;
 struct Position {
@@ -17,16 +18,13 @@ struct Position {
     y += other.y;
     return *this;
   }
-  Position operator+(const Position &other) {
-    Position tmp = *this;
-    tmp += other;
-    return tmp;
-  }
+  Position operator+(const Position &other) { return Position(*this) += other; }
 };
 
 struct Drawer {
   virtual void Draw(const tPoint &) = 0;
   virtual void Draw(const tSegmentFigure &) = 0;
+  virtual void Draw(const tLineSegment &) = 0;
   virtual ~Drawer() {}
 };
 
