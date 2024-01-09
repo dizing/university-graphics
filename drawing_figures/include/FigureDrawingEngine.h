@@ -6,11 +6,11 @@
 #include "SFMLDrawer.h"
 
 class MovableObjectState {
-public:
+ public:
   void OnEvent(sf::Event event);
   my_graph_lib::Position GetUpdateDelta();
 
-private:
+ private:
   enum MovingDirections {
     kLeft = 1 << 0,
     kRight = 1 << 1,
@@ -22,7 +22,7 @@ private:
 };
 
 class FigureDrawingEngine : public MenuOwner {
-public:
+ public:
   enum class EngineState { kMenu, kDrawingObject };
 
   using Drawables =
@@ -41,7 +41,7 @@ public:
   virtual void OnMenuItemSelected(std::string selected_item_name) override;
   virtual void OnMenuExited() override;
 
-private:
+ private:
   Drawables drawables_ = InitializeDrawables();
   std::string current_drawable_object_name_;
   FigureDrawingMenu menu_;

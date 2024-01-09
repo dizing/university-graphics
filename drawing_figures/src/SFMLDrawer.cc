@@ -37,7 +37,7 @@ void SFMLDrawer::Draw(const my_graph_lib::tLineSegment &segment) {
   window_.draw(line);
 }
 
-void SFMLDrawer::Draw(const my_graph_lib::tCircle & circle) {
+void SFMLDrawer::Draw(const my_graph_lib::tCircle &circle) {
   sf::CircleShape shape;
 
   auto [x, y] = circle.getPosition();
@@ -50,7 +50,7 @@ void SFMLDrawer::Draw(const my_graph_lib::tCircle & circle) {
   window_.draw(shape);
 }
 
-void SFMLDrawer::Draw(const my_graph_lib::tEllipse & ellipse) {
+void SFMLDrawer::Draw(const my_graph_lib::tEllipse &ellipse) {
   sf::CircleShape shape;
 
   auto [x, y] = ellipse.getPosition();

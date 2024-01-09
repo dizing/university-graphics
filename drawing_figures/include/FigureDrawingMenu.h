@@ -12,7 +12,7 @@ struct MenuOwner {
 };
 
 class FigureDrawingMenu {
-public:
+ public:
   FigureDrawingMenu(MenuOwner &owner, sf::Font font,
                     std::vector<std::string> menu_content);
 
@@ -20,7 +20,7 @@ public:
   void SetSize(float x, float y);
   void OnEvent(sf::Event event);
 
-private:
+ private:
   class MenuElement;
 
   MenuOwner &owner_;
@@ -32,13 +32,13 @@ private:
 };
 
 class FigureDrawingMenu::MenuElement : public sf::RectangleShape {
-public:
+ public:
   MenuElement(sf::Text text);
   void Draw(sf::RenderWindow &window);
   void setPosition(float x, float y);
   void setSize(const sf::Vector2f &size);
   std::string GetName();
 
-private:
+ private:
   sf::Text text_;
 };

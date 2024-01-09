@@ -6,7 +6,7 @@
 namespace my_graph_lib {
 
 class tPoint : public Drawable {
-public:
+ public:
   tPoint();
   tPoint(Position position, RGBColor color, float size);
 
@@ -23,10 +23,10 @@ public:
 
   static void movePointBy(tPoint &point, Position delta);
 
-private:
+ private:
   Position position_;
   float size_;
   RGBColor color_;
 };
 
-} // namespace my_graph_lib
+}  // namespace my_graph_lib

@@ -6,4 +6,4 @@ tLineSegment::tLineSegment(Position pos_a, Position pos_b, RGBColor color)
 
 void tLineSegment::Draw(Drawer &drawer) { drawer.Draw(*this); }
 
-} // namespace my_graph_lib
+}  // namespace my_graph_lib

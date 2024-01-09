@@ -8,8 +8,8 @@
 
 namespace my_graph_lib {
 class tTriangle : public tSegmentFigure {
-public:
+ public:
   tTriangle(Position pos_a, Position pos_b, Position pos_c, RGBColor color);
 };
 
-} // namespace my_graph_lib
+}  // namespace my_graph_lib

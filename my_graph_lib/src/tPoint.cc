@@ -34,4 +34,4 @@ void tPoint::movePointBy(tPoint &point, Position delta) {
 
 void tPoint::Draw(Drawer &drawer) { drawer.Draw(*this); }
 
-} // namespace my_graph_lib
+}  // namespace my_graph_lib

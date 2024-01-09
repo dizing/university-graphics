@@ -37,4 +37,4 @@ struct Drawable {
   virtual ~Drawable() {}
 };
 
-} // namespace my_graph_lib
+}  // namespace my_graph_lib

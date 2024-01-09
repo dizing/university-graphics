@@ -2,24 +2,22 @@
 
 #include "tCircle.h"
 
-namespace my_graph_lib
-{
+namespace my_graph_lib {
 
-    class tEllipse : public tCircle {
-    public:
-    tEllipse(Position position, RGBColor color, float size, float thickness, float coeff);
+class tEllipse : public tCircle {
+ public:
+  tEllipse(Position position, RGBColor color, float size, float thickness,
+           float coeff);
 
-    void Draw(Drawer &) override;
+  void Draw(Drawer &) override;
 
-    static void moveEllipseBy(tEllipse &ellipse, Position delta);
+  static void moveEllipseBy(tEllipse &ellipse, Position delta);
 
-    float getCoeff() const;
-    void setCoeff(float);    
+  float getCoeff() const;
+  void setCoeff(float);
 
-    private:
-    float coeff_;
+ private:
+  float coeff_;
 };
-    
-} // namespace my_graph_lib
 
-
+}  // namespace my_graph_lib

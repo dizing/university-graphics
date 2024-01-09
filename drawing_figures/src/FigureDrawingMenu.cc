@@ -24,9 +24,9 @@ void FigureDrawingMenu::Draw(sf::RenderWindow &window) {
 void FigureDrawingMenu::SetSize(float x, float y) {
   for (int i = 0; i < menu_items_.size(); ++i) {
     menu_items_[i].setSize({x / 2.f, y / (menu_items_.size() * 2 + 1.f)});
-    menu_items_[i].setPosition(x / 2. - menu_items_[i].getSize().x / 2.,
-                               (1. + 2. * i) * y /
-                                   (menu_items_.size() * 2. + 1.f));
+    menu_items_[i].setPosition(
+        x / 2. - menu_items_[i].getSize().x / 2.,
+        (1. + 2. * i) * y / (menu_items_.size() * 2. + 1.f));
   }
 }
 

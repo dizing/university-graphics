@@ -5,19 +5,18 @@
 namespace my_graph_lib {
 
 class tCircle : public tPoint {
-    public:
-    tCircle(Position position, RGBColor color, float size, float thickness);
+ public:
+  tCircle(Position position, RGBColor color, float size, float thickness);
 
-    void Draw(Drawer &) override;
+  void Draw(Drawer &) override;
 
-    static void moveCircleBy(tCircle &circle, Position delta);
+  static void moveCircleBy(tCircle &circle, Position delta);
 
-    float getThickness() const;
-    void setThickness(float);
+  float getThickness() const;
+  void setThickness(float);
 
-    private:
-    float thickness_;
+ private:
+  float thickness_;
 };
 
-
-}
+}  // namespace my_graph_lib

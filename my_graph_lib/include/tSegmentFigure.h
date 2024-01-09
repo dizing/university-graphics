@@ -6,7 +6,7 @@
 namespace my_graph_lib {
 
 class tSegmentFigure : public Drawable {
-public:
+ public:
   void Draw(Drawer &) override;
 
   void setRGBColor(RGBColor);
@@ -15,12 +15,12 @@ public:
 
   static void movePointBy(tSegmentFigure &figure, Position delta);
 
-protected:
+ protected:
   tSegmentFigure(std::vector<Position> points, RGBColor color);
 
-private:
+ private:
   std::vector<Position> points_;
   RGBColor color_;
 };
 
-} // namespace my_graph_lib
+}  // namespace my_graph_lib

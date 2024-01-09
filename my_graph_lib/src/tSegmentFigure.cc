@@ -8,26 +8,24 @@ int orientation(Position p, Position q, Position r) {
   auto &[rX, rY] = r;
   int val = (qY - pY) * (rX - qX) - (qX - pX) * (rY - qY);
 
-  if (val == 0)
-    return 0;
+  if (val == 0) return 0;
   return (val > 0) ? 1 : 2;
 }
 
 tSegmentFigure::tSegmentFigure(std::vector<Position> points, RGBColor color)
-    : points_(), color_(std::move(color))
+    : points_(),
+      color_(std::move(color))
 
 {
   int l = 0;
   for (int i = 1; i < points.size(); i++)
-    if (points[i].x < points[l].x)
-      l = i;
+    if (points[i].x < points[l].x) l = i;
   int p = l, q;
   do {
     points_.push_back(points[p]);
     q = (p + 1) % points.size();
     for (int i = 0; i < points.size(); i++) {
-      if (orientation(points[p], points[i], points[q]) == 2)
-        q = i;
+      if (orientation(points[p], points[i], points[q]) == 2) q = i;
     }
     p = q;
   } while (p != l);
@@ -49,4 +47,4 @@ void tSegmentFigure::movePointBy(tSegmentFigure &figure, Position delta) {
   }
 }
 
-} // namespace my_graph_lib
+}  // namespace my_graph_lib
