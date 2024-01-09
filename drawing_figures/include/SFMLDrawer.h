@@ -7,6 +7,7 @@
 #include "tPoint.h"
 #include "tRectangle.h"
 #include "tTriangle.h"
+#include "tCircle.h"
 
 class SFMLDrawer : public my_graph_lib::Drawer {
 public:
@@ -15,6 +16,7 @@ public:
   void Draw(const my_graph_lib::tPoint &) override;
   void Draw(const my_graph_lib::tSegmentFigure &) override;
   void Draw(const my_graph_lib::tLineSegment &) override;
+  void Draw(const my_graph_lib::tCircle &) override;
 
 private:
   sf::RenderWindow &window_;

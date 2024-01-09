@@ -36,3 +36,16 @@ void SFMLDrawer::Draw(const my_graph_lib::tLineSegment &segment) {
   line[1] = sf::Vertex(sf::Vector2f(x1, y1), {r, g, b});
   window_.draw(line);
 }
+
+void SFMLDrawer::Draw(const my_graph_lib::tCircle & circle) {
+  sf::CircleShape shape;
+
+  auto [x, y] = circle.getPosition();
+  shape.setPosition(x, y);
+  auto [r, g, b] = circle.getRGBColor();
+  shape.setOutlineColor({r, g, b});
+  shape.setRadius(circle.getSize());
+  shape.setOutlineThickness(circle.getThickness());
+  shape.setFillColor(sf::Color::Transparent);
+  window_.draw(shape);
+}

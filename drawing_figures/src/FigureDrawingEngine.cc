@@ -105,6 +105,13 @@ void FigureDrawingEngine::Update() {
               *drawables_[current_drawable_object_name_]),
           movable_state_.GetUpdateDelta());
     }
+
+    if (current_drawable_object_name_ == "Circle") {
+      my_graph_lib::tCircle::movePointBy(
+          dynamic_cast<my_graph_lib::tCircle &>(
+              *drawables_[current_drawable_object_name_]),
+          movable_state_.GetUpdateDelta());
+    }
   }
 }
 
@@ -137,6 +144,8 @@ FigureDrawingEngine::Drawables FigureDrawingEngine::InitializeDrawables() {
   drawables["Line Segment"] =
       std::move(std::make_unique<my_graph_lib::tLineSegment>(points[0],
                                                              points[1], color));
+
+  drawables["Circle"] = std::move(std::make_unique<my_graph_lib::tCircle>(points[0], color, 50, 2.5));
   return drawables;
 }
 
