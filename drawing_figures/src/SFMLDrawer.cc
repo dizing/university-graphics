@@ -49,3 +49,19 @@ void SFMLDrawer::Draw(const my_graph_lib::tCircle & circle) {
   shape.setFillColor(sf::Color::Transparent);
   window_.draw(shape);
 }
+
+void SFMLDrawer::Draw(const my_graph_lib::tEllipse & ellipse) {
+  sf::CircleShape shape;
+
+  auto [x, y] = ellipse.getPosition();
+  shape.setPosition(x, y);
+  auto [r, g, b] = ellipse.getRGBColor();
+  shape.setOutlineColor({r, g, b});
+  shape.setRadius(ellipse.getSize());
+  shape.setOutlineThickness(ellipse.getThickness());
+  shape.setFillColor(sf::Color::Transparent);
+
+  shape.setScale(1.0f, 1.0f * ellipse.getCoeff());
+
+  window_.draw(shape);
+}

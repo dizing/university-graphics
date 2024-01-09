@@ -8,6 +8,7 @@ class tPoint;
 class tSegmentFigure;
 class tLineSegment;
 class tCircle;
+class tEllipse;
 
 using RGBColor = std::tuple<uint8_t, uint8_t, uint8_t>;
 struct Position {
@@ -27,6 +28,7 @@ struct Drawer {
   virtual void Draw(const tSegmentFigure &) = 0;
   virtual void Draw(const tLineSegment &) = 0;
   virtual void Draw(const tCircle &) = 0;
+  virtual void Draw(const tEllipse &) = 0;
   virtual ~Drawer() {}
 };
 
