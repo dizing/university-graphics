@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "DrawInterfaces.h"
+#include "Interfaces.h"
 #include "tCircle.h"
 #include "tEllipse.h"
 #include "tLineSegment.h"

@@ -1,7 +1,5 @@
 #pragma once
-#include <vector>
 
-#include "DrawInterfaces.h"
 #include "tSegmentFigure.h"
 
 namespace my_graph_lib {

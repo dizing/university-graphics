@@ -26,10 +26,10 @@ void tPoint::setSize(float radius) { size_ = radius; }
 
 float tPoint::getSize() const { return size_; }
 
-void tPoint::movePointBy(tPoint &point, Position delta) {
-  auto [x, y] = point.getPosition();
+void tPoint::MoveBy(Position delta) {
+  auto [x, y] = getPosition();
   auto [delta_x, delta_y] = delta;
-  point.setPosition({x + delta_x, y + delta_y});
+  setPosition({x + delta_x, y + delta_y});
 }
 
 void tPoint::Draw(Drawer &drawer) { drawer.Draw(*this); }

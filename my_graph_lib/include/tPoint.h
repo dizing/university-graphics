@@ -1,16 +1,16 @@
 #pragma once
-#include <vector>
 
-#include "DrawInterfaces.h"
+#include "Interfaces.h"
 
 namespace my_graph_lib {
 
-class tPoint : public Drawable {
+class tPoint : public Figure {
  public:
   tPoint();
   tPoint(Position position, RGBColor color, float size);
 
   void Draw(Drawer &) override;
+  void MoveBy(Position) override;
 
   void setPosition(Position);
   Position getPosition() const;
@@ -20,8 +20,6 @@ class tPoint : public Drawable {
 
   void setSize(float radius);
   float getSize() const;
-
-  static void movePointBy(tPoint &point, Position delta);
 
  private:
   Position position_;

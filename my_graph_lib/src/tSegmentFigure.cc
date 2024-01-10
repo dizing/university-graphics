@@ -41,8 +41,8 @@ void tSegmentFigure::setRGBColor(RGBColor new_color) { color_ = new_color; }
 
 RGBColor tSegmentFigure::getRGBColor() const { return color_; }
 
-void tSegmentFigure::movePointBy(tSegmentFigure &figure, Position delta) {
-  for (auto &pos : figure.points_) {
+void tSegmentFigure::MoveBy(Position delta) {
+  for (auto &pos : points_) {
     pos += delta;
   }
 }

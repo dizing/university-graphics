@@ -10,8 +10,6 @@ class tCircle : public tPoint {
 
   void Draw(Drawer &) override;
 
-  static void moveCircleBy(tCircle &circle, Position delta);
-
   float getThickness() const;
   void setThickness(float);
 

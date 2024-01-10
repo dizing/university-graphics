@@ -1,19 +1,18 @@
 #pragma once
 #include <vector>
 
-#include "DrawInterfaces.h"
+#include "Interfaces.h"
 
 namespace my_graph_lib {
 
-class tSegmentFigure : public Drawable {
+class tSegmentFigure : public Figure {
  public:
   void Draw(Drawer &) override;
+  void MoveBy(Position) override;
 
   void setRGBColor(RGBColor);
   RGBColor getRGBColor() const;
   const std::vector<Position> &getPoints() const;
-
-  static void movePointBy(tSegmentFigure &figure, Position delta);
 
  protected:
   tSegmentFigure(std::vector<Position> points, RGBColor color);

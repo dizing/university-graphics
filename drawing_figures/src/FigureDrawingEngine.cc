@@ -1,5 +1,7 @@
 #include "FigureDrawingEngine.h"
 
+#include <array>
+
 void MovableObjectState::OnEvent(sf::Event event) {
   if (event.type == sf::Event::KeyPressed) {
     if (event.key.code == sf::Keyboard::Left) direction_flags_ |= kLeft;
@@ -33,8 +35,8 @@ my_graph_lib::Position MovableObjectState::GetUpdateDelta() {
 
 FigureDrawingEngine::FigureDrawingEngine(sf::RenderWindow &window,
                                          sf::Font font)
-    : menu_(*this, font, GetDrawablesKeys(drawables_)),
-      current_drawable_object_name_(GetDrawablesKeys(drawables_)[0]),
+    : menu_(*this, font, GetFiguresKeys(figures_)),
+      current_drawable_object_name_(GetFiguresKeys(figures_)[0]),
       drawer_(window) {
   current_state_ = EngineState::kMenu;
   menu_.SetSize(window.getSize().x, window.getSize().y);
@@ -60,50 +62,13 @@ void FigureDrawingEngine::Draw(sf::RenderWindow &window) {
     menu_.Draw(window);
   }
   if (current_state_ == EngineState::kDrawingObject) {
-    drawables_[current_drawable_object_name_]->Draw(drawer_);
+    figures_[current_drawable_object_name_]->Draw(drawer_);
   }
 }
 
 void FigureDrawingEngine::Update() {
   if (current_state_ == EngineState::kDrawingObject) {
-    if (current_drawable_object_name_ == "Point") {
-      my_graph_lib::tPoint::movePointBy(
-          dynamic_cast<my_graph_lib::tPoint &>(
-              *drawables_[current_drawable_object_name_]),
-          movable_state_.GetUpdateDelta());
-    }
-    if (current_drawable_object_name_ == "Rectangle") {
-      my_graph_lib::tRectangle::movePointBy(
-          dynamic_cast<my_graph_lib::tRectangle &>(
-              *drawables_[current_drawable_object_name_]),
-          movable_state_.GetUpdateDelta());
-    }
-    if (current_drawable_object_name_ == "Triangle") {
-      my_graph_lib::tTriangle::movePointBy(
-          dynamic_cast<my_graph_lib::tTriangle &>(
-              *drawables_[current_drawable_object_name_]),
-          movable_state_.GetUpdateDelta());
-    }
-    if (current_drawable_object_name_ == "Line Segment") {
-      my_graph_lib::tLineSegment::movePointBy(
-          dynamic_cast<my_graph_lib::tLineSegment &>(
-              *drawables_[current_drawable_object_name_]),
-          movable_state_.GetUpdateDelta());
-    }
-
-    if (current_drawable_object_name_ == "Circle") {
-      my_graph_lib::tCircle::movePointBy(
-          dynamic_cast<my_graph_lib::tCircle &>(
-              *drawables_[current_drawable_object_name_]),
-          movable_state_.GetUpdateDelta());
-    }
-
-    if (current_drawable_object_name_ == "Ellipse") {
-      my_graph_lib::tEllipse::movePointBy(
-          dynamic_cast<my_graph_lib::tEllipse &>(
-              *drawables_[current_drawable_object_name_]),
-          movable_state_.GetUpdateDelta());
-    }
+    figures_[current_drawable_object_name_]->MoveBy(movable_state_.GetUpdateDelta());
   }
 }
 
@@ -118,8 +83,8 @@ void FigureDrawingEngine::OnMenuExited() {
   current_state_ = EngineState::kDrawingObject;
 }
 
-FigureDrawingEngine::Drawables FigureDrawingEngine::InitializeDrawables() {
-  Drawables drawables;
+FigureDrawingEngine::Figures FigureDrawingEngine::InitializeFigures() {
+  Figures Figures;
   my_graph_lib::RGBColor color = {rand() % 255, rand() % 255, rand() % 255};
   std::array<my_graph_lib::Position, 4> points = {
       {{300.f, 300.f}, {500.f, 500.f}, {300.f, 500.f}, {500.f, 300.f}}};
@@ -127,26 +92,26 @@ FigureDrawingEngine::Drawables FigureDrawingEngine::InitializeDrawables() {
   point.setPosition(points[0]);
   point.setRGBColor(color);
   point.setSize(50);
-  drawables["Point"] =
+  Figures["Point"] =
       std::move(std::make_unique<my_graph_lib::tPoint>((point)));
-  drawables["Triangle"] = std::move(std::make_unique<my_graph_lib::tTriangle>(
+  Figures["Triangle"] = std::move(std::make_unique<my_graph_lib::tTriangle>(
       points[0], points[1], points[2], color));
-  drawables["Rectangle"] = std::move(std::make_unique<my_graph_lib::tRectangle>(
+  Figures["Rectangle"] = std::move(std::make_unique<my_graph_lib::tRectangle>(
       points[0], points[1], points[2], points[3], color));
-  drawables["Line Segment"] =
+  Figures["Line Segment"] =
       std::move(std::make_unique<my_graph_lib::tLineSegment>(points[0],
                                                              points[1], color));
-  drawables["Circle"] = std::move(
+  Figures["Circle"] = std::move(
       std::make_unique<my_graph_lib::tCircle>(points[0], color, 100, 4));
-  drawables["Ellipse"] = std::move(
+  Figures["Ellipse"] = std::move(
       std::make_unique<my_graph_lib::tEllipse>(points[0], color, 100, 4, 0.75));
-  return drawables;
+  return Figures;
 }
 
-std::vector<std::string> FigureDrawingEngine::GetDrawablesKeys(
-    const FigureDrawingEngine::Drawables &drawables) {
+std::vector<std::string> FigureDrawingEngine::GetFiguresKeys(
+    const FigureDrawingEngine::Figures &Figures) {
   std::vector<std::string> keys;
-  for (auto &[key, _] : drawables) {
+  for (auto &[key, _] : Figures) {
     keys.push_back(key);
   }
   return keys;

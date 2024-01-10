@@ -11,8 +11,6 @@ class tEllipse : public tCircle {
 
   void Draw(Drawer &) override;
 
-  static void moveEllipseBy(tEllipse &ellipse, Position delta);
-
   float getCoeff() const;
   void setCoeff(float);
 

@@ -36,5 +36,12 @@ struct Drawable {
   virtual void Draw(Drawer &) = 0;
   virtual ~Drawable() {}
 };
+struct Movable {
+  virtual void MoveBy(Position delta) = 0;
+  virtual ~Movable() {}
+};
 
+struct Figure : public Drawable, public Movable {
+  virtual ~Figure() {}
+};
 }  // namespace my_graph_lib

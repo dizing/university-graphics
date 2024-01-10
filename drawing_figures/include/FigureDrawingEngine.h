@@ -25,8 +25,8 @@ class FigureDrawingEngine : public MenuOwner {
  public:
   enum class EngineState { kMenu, kDrawingObject };
 
-  using Drawables =
-      std::map<std::string, std::unique_ptr<my_graph_lib::Drawable>>;
+  using Figures =
+      std::map<std::string, std::unique_ptr<my_graph_lib::Figure>>;
 
   FigureDrawingEngine(sf::RenderWindow &window, sf::Font font);
 
@@ -42,14 +42,13 @@ class FigureDrawingEngine : public MenuOwner {
   virtual void OnMenuExited() override;
 
  private:
-  Drawables drawables_ = InitializeDrawables();
+  Figures figures_ = InitializeFigures();
   std::string current_drawable_object_name_;
   FigureDrawingMenu menu_;
   MovableObjectState movable_state_;
   EngineState current_state_;
   SFMLDrawer drawer_;
 
-  Drawables InitializeDrawables();
-
-  std::vector<std::string> GetDrawablesKeys(const Drawables &drawables);
+  Figures InitializeFigures();
+  std::vector<std::string> GetFiguresKeys(const Figures &drawables);
 };
