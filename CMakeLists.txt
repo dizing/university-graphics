@@ -17,9 +17,10 @@ FetchContent_MakeAvailable(SFML)
 #SOURCE FILES
 add_subdirectory(my_graph_lib)
 add_subdirectory(drawing_figures)
+add_subdirectory(arrow_figure)
 
 add_executable(${PROJECT_NAME} main.cc)
-target_link_libraries(${PROJECT_NAME} PRIVATE drawing_figures)
+target_link_libraries(${PROJECT_NAME} PRIVATE drawing_figures arrow_figure)
 
 #RESOURCES
 set (${PROJECT_NAME}_RESOURCE_DIRECTORY ${CMAKE_BINARY_DIR}/resources)

@@ -22,7 +22,13 @@ void SFMLDrawer::Draw(const my_graph_lib::tSegmentFigure &figure) {
     auto &[x, y] = points[i];
     convex.setPoint(i, sf::Vector2f(x, y));
   }
-  convex.setFillColor({r, g, b});
+  convex.setOutlineColor({r, g, b});
+  convex.setOutlineThickness(-3.5);
+  if (figure.getFillColor().has_value()) {
+    auto [r, g, b] = *figure.getFillColor();
+    convex.setFillColor({r, g, b});
+  } else {
+    convex.setFillColor(sf::Color::Transparent);}
   window_.draw(convex);
 }
 
@@ -46,7 +52,11 @@ void SFMLDrawer::Draw(const my_graph_lib::tCircle &circle) {
   shape.setOutlineColor({r, g, b});
   shape.setRadius(circle.getSize());
   shape.setOutlineThickness(circle.getThickness());
-  shape.setFillColor(sf::Color::Transparent);
+  if (circle.getFillColor().has_value()) {
+    auto [r, g, b] = *circle.getFillColor();
+    shape.setFillColor({r, g, b});
+  } else {
+    shape.setFillColor(sf::Color::Transparent);}
   window_.draw(shape);
 }
 
@@ -59,7 +69,11 @@ void SFMLDrawer::Draw(const my_graph_lib::tEllipse &ellipse) {
   shape.setOutlineColor({r, g, b});
   shape.setRadius(ellipse.getSize());
   shape.setOutlineThickness(ellipse.getThickness());
-  shape.setFillColor(sf::Color::Transparent);
+  if (ellipse.getFillColor().has_value()) {
+    auto [r, g, b] = *ellipse.getFillColor();
+    shape.setFillColor({r, g, b});
+  } else {
+    shape.setFillColor(sf::Color::Transparent);}
 
   shape.setScale(1.0f, 1.0f * ellipse.getCoeff());
 

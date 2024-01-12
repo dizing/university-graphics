@@ -47,4 +47,12 @@ void tSegmentFigure::MoveBy(Position delta) {
   }
 }
 
+void tSegmentFigure::setFillColor(RGBColor color) {
+    fill_color_ = color;
+}
+
+std::optional<RGBColor> tSegmentFigure::getFillColor() const {
+    return fill_color_;
+}
+
 }  // namespace my_graph_lib
