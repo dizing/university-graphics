@@ -1,8 +1,6 @@
 #pragma once
 
-#include <tEllipse.h>
-#include <tRectangle.h>
-#include <SFMLDrawer.h>
+#include "SFMLDrawer.h"
 
 class tArrowFigure : my_graph_lib::Movable {
     public:

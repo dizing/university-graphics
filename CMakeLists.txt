@@ -16,22 +16,10 @@ FetchContent_MakeAvailable(SFML)
 
 #SOURCE FILES
 add_subdirectory(my_graph_lib)
-add_subdirectory(drawing_figures)
 add_subdirectory(arrow_figure)
 
 add_executable(${PROJECT_NAME} main.cc)
-target_link_libraries(${PROJECT_NAME} PRIVATE drawing_figures arrow_figure)
-
-#RESOURCES
-set (${PROJECT_NAME}_RESOURCE_DIRECTORY ${CMAKE_BINARY_DIR}/resources)
-target_compile_definitions(${PROJECT_NAME} PRIVATE -D${PROJECT_NAME}_RESOURCE_DIRECTORY="${${PROJECT_NAME}_RESOURCE_DIRECTORY}")
-
-add_custom_command(TARGET ${PROJECT_NAME}
-    PRE_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        ${CMAKE_CURRENT_SOURCE_DIR}/resources/font.otf                   
-        ${${PROJECT_NAME}_RESOURCE_DIRECTORY}/font.otf
-)
+target_link_libraries(${PROJECT_NAME} PRIVATE arrow_figure)
 
 if(WIN32)
     add_custom_command(
