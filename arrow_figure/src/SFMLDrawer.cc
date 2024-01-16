@@ -28,7 +28,8 @@ void SFMLDrawer::Draw(const my_graph_lib::tSegmentFigure &figure) {
     auto [r, g, b] = *figure.getFillColor();
     convex.setFillColor({r, g, b});
   } else {
-    convex.setFillColor(sf::Color::Transparent);}
+    convex.setFillColor(sf::Color::Transparent);
+  }
   window_.draw(convex);
 }
 
@@ -56,7 +57,8 @@ void SFMLDrawer::Draw(const my_graph_lib::tCircle &circle) {
     auto [r, g, b] = *circle.getFillColor();
     shape.setFillColor({r, g, b});
   } else {
-    shape.setFillColor(sf::Color::Transparent);}
+    shape.setFillColor(sf::Color::Transparent);
+  }
   window_.draw(shape);
 }
 
@@ -73,7 +75,8 @@ void SFMLDrawer::Draw(const my_graph_lib::tEllipse &ellipse) {
     auto [r, g, b] = *ellipse.getFillColor();
     shape.setFillColor({r, g, b});
   } else {
-    shape.setFillColor(sf::Color::Transparent);}
+    shape.setFillColor(sf::Color::Transparent);
+  }
 
   shape.setScale(1.0f, 1.0f * ellipse.getCoeff());
 

@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
-#include "tArrowFigure.h"
 #include "MovableObjectState.h"
+#include "tArrowFigure.h"
 
 int main() {
   srand(time(NULL));

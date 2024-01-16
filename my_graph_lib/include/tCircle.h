@@ -1,8 +1,7 @@
 #pragma once
 
-#include "tPoint.h"
 #include "optional"
-
+#include "tPoint.h"
 
 namespace my_graph_lib {
 
@@ -17,7 +16,7 @@ class tCircle : public tPoint {
 
   void setFillColor(RGBColor color);
   std::optional<RGBColor> getFillColor() const;
-  
+
  private:
   float thickness_;
   std::optional<RGBColor> fill_color_;

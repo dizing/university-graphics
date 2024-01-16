@@ -10,12 +10,8 @@ float tCircle::getThickness() const { return thickness_; }
 
 void tCircle::setThickness(float thickness) { thickness_ = thickness; }
 
-void tCircle::setFillColor(RGBColor color) {
-    fill_color_ = color;
-}
+void tCircle::setFillColor(RGBColor color) { fill_color_ = color; }
 
-std::optional<RGBColor> tCircle::getFillColor() const {
-    return fill_color_;
-}
+std::optional<RGBColor> tCircle::getFillColor() const { return fill_color_; }
 
 }  // namespace my_graph_lib
