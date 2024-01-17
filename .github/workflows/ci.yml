@@ -43,6 +43,6 @@ jobs:
     - name: Archive binaries artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: binaries
+        name: binaries_${{matrix.platform.name}}_${{matrix.config.name}}
         path: |
           build/bin
